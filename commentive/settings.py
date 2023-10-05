@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -39,6 +40,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "api",
     "rest_framework",
+    "rest_framework.authtoken",
+    "rest_framework_simplejwt",
+    "drf_yasg",
 ]
 
 MIDDLEWARE = [
@@ -125,10 +129,31 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.AllowAny",
-    ],
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),  # Adjust as needed
+    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),  # Adjust as needed
+    "SLIDING_TOKEN_LIFETIME": timedelta(days=1),  # Adjust as needed
+    "SLIDING_TOKEN_REFRESH_LIFETIME_ALLOW_REFRESH": True,
+    "SLIDING_TOKEN_LIFETIME_ALLOW_REFRESH": True,
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": "your-secret-key",  # Replace with your actual secret key
+    "VERIFYING_KEY": None,
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "USER_ID_CLAIM": "user_id",
+}
+SWAGGER_SETTINGS = {
+    "DEFAULT_INFO": "content_rating_app.urls.openapi_info",
+    "SECURITY_DEFINITIONS": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+        },
+    },
+    "USE_SESSION_AUTH": False,
 }
