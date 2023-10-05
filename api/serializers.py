@@ -11,4 +11,4 @@ class ContentSerializer(serializers.ModelSerializer):
 class RatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rating
-        fields = ("user", "content", "rating")
+        fields = ("user", "content", "score")
