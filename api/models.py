@@ -8,7 +8,7 @@ class Content(models.Model):
     text = models.TextField()
 
     def __str__(self):
-        return f"{self.id} - {self.title}"
+        return f"{self.id} - {self.title} - {self.average_rating} - {self.number_of_ratings} - {self.user_rating}"
 
     @property
     def average_rating(self):
@@ -46,3 +46,16 @@ class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.ForeignKey(Content, on_delete=models.CASCADE)
     score = models.IntegerField(choices=SCORE_CHOICES)
+
+    class Meta:
+        unique_together = ["user", "content"]
+
+    def __str__(self):
+        return f"{self.user} - {self.content} - {self.score}"
+
+    def __repr__(self) -> str:
+        return f"{self.user} - {self.content} - {self.score}"
+
+    @property
+    def user_ratings(self):
+        return Rating.objects.filter(user=self.user)
