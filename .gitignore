@@ -1,3 +1,4 @@
 *.py[cod]
 recursive-exclude * __pycache__
 *.sqlite3
+000*

@@ -1,12 +1,11 @@
-from django.urls import path
-from .views import ContentListView, ContentDetailView, ContentRatingView
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import ContentViewSet, RatingViewSet
+
+router = DefaultRouter()
+router.register(r"contents", ContentViewSet)
+router.register(r"ratings", RatingViewSet)
 
 urlpatterns = [
-    path("content/", ContentListView.as_view(), name="content-list"),
-    path("content/<int:pk>/", ContentDetailView.as_view(), name="content-detail"),
-    path(
-        "content/<int:content_id>/rate/",
-        ContentRatingView.as_view(),
-        name="content-rate",
-    ),
+    path("", include(router.urls)),
 ]

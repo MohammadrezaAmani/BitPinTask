@@ -1,24 +1,13 @@
-from rest_framework import generics, permissions
+from rest_framework import viewsets
 from .models import Content, Rating
 from .serializers import ContentSerializer, RatingSerializer
 
 
-class ContentListView(generics.ListAPIView):
+class ContentViewSet(viewsets.ModelViewSet):
     queryset = Content.objects.all()
     serializer_class = ContentSerializer
 
 
-class ContentDetailView(generics.RetrieveAPIView):
-    queryset = Content.objects.all()
-    serializer_class = ContentSerializer
-
-
-class ContentRatingView(generics.CreateAPIView, generics.UpdateAPIView):
+class RatingViewSet(viewsets.ModelViewSet):
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_object(self):
-        user = self.request.user
-        content_id = self.kwargs["content_id"]
-        return Rating.objects.get(user=user, content_id=content_id)
