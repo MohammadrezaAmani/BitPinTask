@@ -1,14 +1,14 @@
 from rest_framework import serializers
-from .models import Content, Rating
+from .models import Content, UserRating
 
 
 class ContentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Content
-        fields = ["id", "title", "text"]
+        fields = "__all__"
 
 
 class RatingSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Rating
-        fields = ["id", "user", "content", "score"]
+        model = UserRating
+        fields = ("user", "content", "rating")
