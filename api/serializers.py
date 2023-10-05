@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Content, UserRating
+from .models import Content, Rating
 
 
 class ContentSerializer(serializers.ModelSerializer):
@@ -10,5 +10,5 @@ class ContentSerializer(serializers.ModelSerializer):
 
 class RatingSerializer(serializers.ModelSerializer):
     class Meta:
-        model = UserRating
+        model = Rating
         fields = ("user", "content", "rating")
