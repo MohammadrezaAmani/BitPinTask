@@ -10,11 +10,13 @@ class ContentListView(generics.ListAPIView):
     serializer_class = ContentSerializer
     pagination_class = PageNumberPagination
 
+
 class ContentRatingView(generics.CreateAPIView, generics.UpdateAPIView):
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
     permission_classes = (IsAuthenticated,)
     pagination_class = PageNumberPagination
+
     def get_object(self):
         user = self.request.user
         content_id = self.kwargs.get("pk")
